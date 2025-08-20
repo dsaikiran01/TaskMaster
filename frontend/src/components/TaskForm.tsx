@@ -277,15 +277,46 @@ const TaskForm: React.FC<TaskFormProps> = ({
                         <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1">
                             Due Date
                         </label>
-                        <input
-                            type="datetime-local"
-                            id="dueDate"
-                            name="dueDate"
-                            value={formData.dueDate}
-                            onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                            aria-describedby="dueDateHelp"
-                        />
+                        <div className="space-y-2">
+                            {/* Date Picker */}
+                            <input
+                                type="date"
+                                id="dueDateDate"
+                                name="dueDateDate"
+                                value={formData.dueDate ? formData.dueDate.split('T')[0] : ''}
+                                onChange={(e) => {
+                                    const datePart = e.target.value;
+                                    const timePart = formData.dueDate?.split('T')[1] || '00:00';
+                                    handleChange({
+                                        target: {
+                                            name: 'dueDate',
+                                            value: `${datePart}T${timePart}`,
+                                        },
+                                    });
+                                }}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                            />
+
+                            {/* Time Picker */}
+                            <input
+                                type="time"
+                                id="dueDateTime"
+                                name="dueDateTime"
+                                value={formData.dueDate ? formData.dueDate.split('T')[1]?.slice(0, 5) : ''}
+                                onChange={(e) => {
+                                    const timePart = e.target.value;
+                                    const datePart = formData.dueDate?.split('T')[0] || new Date().toISOString().split('T')[0];
+                                    handleChange({
+                                        target: {
+                                            name: 'dueDate',
+                                            value: `${datePart}T${timePart}`,
+                                        },
+                                    });
+                                }}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                            />
+                        </div>
+
                         <p id="dueDateHelp" className="text-xs text-gray-500 mt-1">
                             Optional: Set a due date and time for the task.
                         </p>
