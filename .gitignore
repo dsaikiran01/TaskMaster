@@ -3,6 +3,8 @@ backend/config.env
 
 frontend/node_modules
 
+frontend-cra/
+
 *.txt
 detail.md
 

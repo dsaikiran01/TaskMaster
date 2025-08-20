@@ -1,6 +1,6 @@
 # TaskMaster Frontend
 
-A modern, responsive React TypeScript frontend for the MERN stack To-Do List application.
+A modern, responsive React TypeScript frontend for the MERN stack To-Do List application, built with Vite.
 
 ## 🚀 Features
 
@@ -13,6 +13,7 @@ A modern, responsive React TypeScript frontend for the MERN stack To-Do List app
 
 ## 🛠️ Tech Stack
 
+- **Build Tool**: Vite
 - **Framework**: React 18 with TypeScript
 - **Styling**: Tailwind CSS
 - **Routing**: React Router v6
@@ -24,6 +25,7 @@ A modern, responsive React TypeScript frontend for the MERN stack To-Do List app
 ## 📁 Project Structure
 
 ```
+
 frontend/src/
 ├── components/           # Reusable UI components
 │   ├── LoadingSpinner.tsx
@@ -44,8 +46,9 @@ frontend/src/
 ├── types/               # TypeScript type definitions
 │   └── index.ts
 ├── App.tsx              # Main app component
-└── index.tsx            # App entry point
-```
+└── main.tsx             # Vite app entry point
+
+````
 
 ## 🚀 Getting Started
 
@@ -60,41 +63,47 @@ frontend/src/
 1. **Navigate to frontend directory**
    ```bash
    cd frontend
-   ```
+````
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Environment Setup**
    Create a `.env` file in the frontend directory:
+
    ```env
-   REACT_APP_API_URL=http://localhost:5000/api
+   VITE_API_URL=http://localhost:5000/api
    ```
 
 4. **Start development server**
+
    ```bash
-   npm start
+   npm run dev
    ```
 
-   The app will open at `http://localhost:3000`
+   The app will open at `http://localhost:5173`
 
 ## 🎨 UI Components
 
 ### Authentication Pages
-- **LoginPage**: User authentication with email/password
-- **SignupPage**: User registration with validation
+
+* **LoginPage**: User authentication with email/password
+* **SignupPage**: User registration with validation
 
 ### Dashboard
-- **NavigationBar**: Top navigation with user info and logout
-- **FilterSidebar**: Task filtering and statistics
-- **TaskList**: Organized task display grouped by date
-- **TaskCard**: Individual task display with inline editing
-- **TaskForm**: Modal for creating/editing tasks
+
+* **NavigationBar**: Top navigation with user info and logout
+* **FilterSidebar**: Task filtering and statistics
+* **TaskList**: Organized task display grouped by date
+* **TaskCard**: Individual task display with inline editing
+* **TaskForm**: Modal for creating/editing tasks
 
 ### Common Components
-- **LoadingSpinner**: Loading states throughout the app
+
+* **LoadingSpinner**: Loading states throughout the app
 
 ## 🔐 Authentication Flow
 
@@ -105,84 +114,92 @@ frontend/src/
 
 ## 📱 Responsive Design
 
-- **Mobile First**: Optimized for mobile devices
-- **Breakpoints**: Responsive design for tablet and desktop
-- **Touch Friendly**: Optimized touch targets and gestures
-- **Collapsible Sidebar**: Mobile-friendly navigation
+* **Mobile First**: Optimized for mobile devices
+* **Breakpoints**: Responsive design for tablet and desktop
+* **Touch Friendly**: Optimized touch targets and gestures
+* **Collapsible Sidebar**: Mobile-friendly navigation
 
 ## 🎯 Task Management Features
 
 ### Task Creation
-- Title (required)
-- Description (optional)
-- Due date and time
-- Priority levels (low/medium/high)
-- Custom tags
+
+* Title (required)
+* Description (optional)
+* Due date and time
+* Priority levels (low/medium/high)
+* Custom tags
 
 ### Task Organization
-- Grouped by due date (Today, Tomorrow, Overdue, etc.)
-- Priority-based color coding
-- Tag-based categorization
-- Completion status tracking
+
+* Grouped by due date (Today, Tomorrow, Overdue, etc.)
+* Priority-based color coding
+* Tag-based categorization
+* Completion status tracking
 
 ### Task Actions
-- Mark complete/incomplete
-- Edit task details
-- Delete tasks
-- Filter and search
+
+* Mark complete/incomplete
+* Edit task details
+* Delete tasks
+* Filter and search
 
 ## 🎨 Design System
 
 ### Color Palette
-- **Primary**: Blue shades for main actions
-- **Success**: Green for completed tasks
-- **Warning**: Yellow for pending tasks
-- **Danger**: Red for overdue tasks and errors
+
+* **Primary**: Blue shades for main actions
+* **Success**: Green for completed tasks
+* **Warning**: Yellow for pending tasks
+* **Danger**: Red for overdue tasks and errors
 
 ### Typography
-- **Font**: Inter (Google Fonts)
-- **Weights**: 300, 400, 500, 600, 700
-- **Hierarchy**: Clear heading and body text structure
+
+* **Font**: Inter (Google Fonts)
+* **Weights**: 300, 400, 500, 600, 700
+* **Hierarchy**: Clear heading and body text structure
 
 ### Spacing
-- **Consistent**: 4px base unit system
-- **Responsive**: Adaptive spacing for different screen sizes
+
+* **Consistent**: 4px base unit system
+* **Responsive**: Adaptive spacing for different screen sizes
 
 ## 🔧 Development
 
 ### Available Scripts
 
-- `npm start`: Start development server
-- `npm build`: Build for production
-- `npm test`: Run test suite
-- `npm eject`: Eject from Create React App
+* `npm run dev`: Start development server
+* `npm run build`: Build for production
+* `npm run preview`: Preview the production build
+* `npm run lint`: Run linting
 
 ### Code Style
 
-- **TypeScript**: Strict type checking enabled
-- **ESLint**: Code quality and consistency
-- **Prettier**: Code formatting
-- **Functional Components**: Modern React patterns with hooks
+* **TypeScript**: Strict type checking enabled
+* **ESLint**: Code quality and consistency
+* **Prettier**: Code formatting
+* **Functional Components**: Modern React patterns with hooks
 
 ### State Management
 
-- **Context API**: Global state for auth and tasks
-- **Local State**: Component-level state management
-- **Async Operations**: Proper error handling and loading states
+* **Context API**: Global state for auth and tasks
+* **Local State**: Component-level state management
+* **Async Operations**: Proper error handling and loading states
 
 ## 🧪 Testing
 
 ### Testing Strategy
 
-- **Unit Tests**: Component testing with React Testing Library
-- **Integration Tests**: API integration testing
-- **E2E Tests**: User workflow testing (to be implemented)
+* **Unit Tests**: Component testing with React Testing Library
+* **Integration Tests**: API integration testing
+* **E2E Tests**: User workflow testing (to be implemented)
 
 ### Running Tests
 
 ```bash
 npm test
 ```
+
+> Add a testing framework like Vitest or Jest for test support.
 
 ## 🚀 Deployment
 
@@ -194,29 +211,29 @@ npm run build
 
 ### Deployment Platforms
 
-- **Vercel**: Recommended for React apps
-- **Netlify**: Alternative deployment option
-- **AWS S3**: Static hosting with CloudFront
+* **Vercel**: Recommended for React apps
+* **Netlify**: Alternative deployment option
+* **AWS S3**: Static hosting with CloudFront
 
 ### Environment Variables
 
 ```env
-REACT_APP_API_URL=https://your-api-domain.com/api
+VITE_API_URL=https://your-api-domain.com/api
 ```
 
 ## 🔒 Security Features
 
-- **JWT Authentication**: Secure token-based auth
-- **Input Validation**: Client-side form validation
-- **XSS Protection**: React's built-in XSS protection
-- **HTTPS Only**: Secure communication in production
+* **JWT Authentication**: Secure token-based auth
+* **Input Validation**: Client-side form validation
+* **XSS Protection**: React's built-in XSS protection
+* **HTTPS Only**: Secure communication in production
 
 ## 📱 PWA Features (Future)
 
-- **Service Worker**: Offline functionality
-- **App Manifest**: Installable app experience
-- **Push Notifications**: Task reminders
-- **Background Sync**: Offline task creation
+* **Service Worker**: Offline functionality
+* **App Manifest**: Installable app experience
+* **Push Notifications**: Task reminders
+* **Background Sync**: Offline task creation
 
 ## 🤝 Contributing
 
@@ -233,13 +250,14 @@ This project is licensed under the MIT License.
 ## 🆘 Support
 
 For support and questions:
-- Check the documentation
-- Open an issue in the repository
-- Review the backend API documentation
+
+* Check the documentation
+* Open an issue in the repository
+* Review the backend API documentation
 
 ## 🔄 Updates and Maintenance
 
-- **Regular Updates**: Keep dependencies up to date
-- **Security Patches**: Monitor for security vulnerabilities
-- **Performance**: Regular performance audits
-- **Accessibility**: Continuous accessibility improvements
+* **Regular Updates**: Keep dependencies up to date
+* **Security Patches**: Monitor for security vulnerabilities
+* **Performance**: Regular performance audits
+* **Accessibility**: Continuous accessibility improvements
