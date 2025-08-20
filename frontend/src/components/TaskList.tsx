@@ -75,7 +75,7 @@ const TaskList: React.FC<TaskListProps> = ({
 
     // Precompute today/tomorrow start times for better date comparison
     const today = startOfDay(new Date());
-    // const tomorrow = startOfDay(new Date(today.getTime() + 24 * 60 * 60 * 1000));
+    const tomorrow = startOfDay(new Date(today.getTime() + 24 * 60 * 60 * 1000));
 
     // Group tasks by date category
     const groupedTasks = tasks.reduce<Record<string, Task[]>>((groups, task) => {
