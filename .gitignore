@@ -1,5 +1,5 @@
 backend/node_modules
-backend/config.env
+backend/.env.*
 
 frontend/node_modules
 frontend/.env

@@ -148,12 +148,12 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                                     key={priority}
                                     onClick={() => handleFilterChange('priority', priority)}
                                     className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${isActive('priority', priority)
-                                            ? priority === 'high'
-                                                ? 'bg-red-100 text-red-700'
-                                                : priority === 'medium'
-                                                    ? 'bg-yellow-100 text-yellow-700'
-                                                    : 'bg-green-100 text-green-700'
-                                            : 'text-gray-700 hover:bg-gray-100'
+                                        ? priority === 'high'
+                                            ? 'bg-red-100 text-red-700'
+                                            : priority === 'medium'
+                                                ? 'bg-yellow-100 text-yellow-700'
+                                                : 'bg-green-100 text-green-700'
+                                        : 'text-gray-700 hover:bg-gray-100'
                                         }`}
                                 >
                                     {priority.charAt(0).toUpperCase() + priority.slice(1)} Priority
@@ -181,6 +181,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                             >
                                 All Dates
                             </button>
+                            {/* TODO: stop this from including Tommorrow tasks */}
                             <button
                                 onClick={() => handleFilterChange('dueDate', new Date().toISOString().split('T')[0])}
                                 className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${isActive('dueDate', new Date().toISOString().split('T')[0])
@@ -190,6 +191,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                             >
                                 Due Today
                             </button>
+                            {/* TODO: Make this button functional */}
                             <button
                                 onClick={() => {
                                     const tomorrow = new Date();

@@ -32,33 +32,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
- useEffect(() => {
-  const storedToken = localStorage.getItem('token');
-  if (!storedToken) {
-    setIsLoading(false);
-    return;
-  }
-
-  console.log('Restoring session with token:', storedToken);
-
-  setToken(storedToken);
-  apiService.setToken(storedToken);
-
-  // Fetch user from backend using the token
-  apiService.getCurrentUser()
-    .then((user) => {
-      setUser(user);
-    })
-    .catch((error) => {
-      // Token is invalid or expired
-      console.error('Failed to restore user session:', error);
-      setToken(null);
-      localStorage.removeItem('token');
-    })
-    .finally(() => {
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
       setIsLoading(false);
-    });
-}, []);
+      return;
+    }
+
+    setToken(storedToken);
+    apiService.setToken(storedToken);
+
+    // Fetch user from backend using the token
+    apiService.getCurrentUser()
+      .then((user) => {
+        setUser(user);
+      })
+      .catch((error) => {
+        // Token is invalid or expired
+        console.error('Failed to restore user session:', error);
+        setToken(null);
+        localStorage.removeItem('token');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
 
   useEffect(() => {

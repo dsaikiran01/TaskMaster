@@ -1,15 +1,20 @@
 # TaskMaster Backend API
 
-A robust Node.js + Express.js backend for the MERN stack To-Do List application.
+A robust Node.js + Express.js backend for the TaskMaster MERN stack application.
+
+---
 
 ## 🚀 Features
 
 - **User Authentication**: JWT-based signup/login system
 - **Task Management**: Full CRUD operations for tasks
 - **Advanced Filtering**: Filter tasks by status, tags, priority, and due date
-- **Data Validation**: Input validation using express-validator
-- **Security**: Password hashing with bcrypt, JWT tokens
+- **Data Validation**: Input validation using `express-validator`
+- **Security**: Password hashing with `bcrypt`, JWT tokens
+- **Environment Config**: `.env.local` and `.env.production` supported
 - **Database**: MongoDB with Mongoose ODM
+
+---
 
 ## 🛠️ Tech Stack
 
@@ -20,25 +25,32 @@ A robust Node.js + Express.js backend for the MERN stack To-Do List application.
 - **Validation**: express-validator
 - **CORS**: Enabled for frontend integration
 
+---
+
 ## 📁 Project Structure
 
 ```
+
 backend/
 ├── config/
-│   └── config.env          # Environment variables
+│   └── env.js               # Loads .env.local or .env.production
 ├── middleware/
-│   ├── auth.js            # JWT authentication middleware
-│   └── validation.js      # Input validation middleware
+│   ├── auth.js              # JWT auth middleware
+│   └── validation.js        # Input validation middleware
 ├── models/
-│   ├── User.js            # User model schema
-│   └── Task.js            # Task model schema
+│   ├── User.js              # User schema
+│   └── Task.js              # Task schema
 ├── routes/
-│   ├── auth.js            # Authentication routes
-│   └── tasks.js           # Task management routes
-├── server.js              # Main server file
-├── package.json           # Dependencies and scripts
-└── README.md              # This file
+│   ├── auth.js              # Authentication routes
+│   └── tasks.js             # Task routes
+├── server.js                # Main entry point
+├── Dockerfile               # (Optional) Docker support
+├── package.json
+└── README.md
+
 ```
+
+---
 
 ## 🚀 Getting Started
 
@@ -50,159 +62,186 @@ backend/
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
+1. **Navigate to backend directory**
+  
+  ```bash
    cd backend
-   ```
+  ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Environment Setup**
-   - Copy `config.env.example` to `config.env`
-   - Update the following variables:
+
+   * Create `.env.local` for local development:
+
      ```env
      PORT=5000
      MONGODB_URI=mongodb://localhost:27017/taskmaster
-     JWT_SECRET=your-super-secret-jwt-key
+     JWT_SECRET=your-secret-key
      NODE_ENV=development
      ```
 
+   * For production, create `.env.production`:
+
+     ```env
+     PORT=5000
+     MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/taskmaster
+     JWT_SECRET=your-production-secret
+     NODE_ENV=production
+     ```
+
 4. **Start the server**
+
    ```bash
-   # Development mode (with auto-reload)
+   # Development mode (auto-reload)
    npm run dev
-   
+
    # Production mode
    npm start
    ```
+
+---
 
 ## 📡 API Endpoints
 
 ### Authentication Routes
 
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|---------|
-| POST | `/api/auth/signup` | User registration | Public |
-| POST | `/api/auth/login` | User authentication | Public |
+| Method | Endpoint           | Description       | Access |
+| ------ | ------------------ | ----------------- | ------ |
+| POST   | `/api/auth/signup` | Register new user | Public |
+| POST   | `/api/auth/login`  | User login        | Public |
 
-### Task Routes (Protected)
+### Task Routes (Protected by JWT)
 
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|---------|
-| GET | `/api/tasks` | Get all user tasks | Private |
-| POST | `/api/tasks` | Create new task | Private |
-| PUT | `/api/tasks/:id` | Update task | Private |
-| DELETE | `/api/tasks/:id` | Delete task | Private |
-| PATCH | `/api/tasks/:id/toggle` | Toggle completion | Private |
+| Method | Endpoint                | Description       | Access  |
+| ------ | ----------------------- | ----------------- | ------- |
+| GET    | `/api/tasks`            | Get all tasks     | Private |
+| POST   | `/api/tasks`            | Create task       | Private |
+| PUT    | `/api/tasks/:id`        | Update task       | Private |
+| DELETE | `/api/tasks/:id`        | Delete task       | Private |
+| PATCH  | `/api/tasks/:id/toggle` | Toggle completion | Private |
 
-### Query Parameters for GET /api/tasks
+#### Query Parameters (GET /api/tasks)
 
-- `completed`: Filter by completion status (true/false)
-- `tag`: Filter by specific tag
-- `priority`: Filter by priority (low/medium/high)
-- `dueDate`: Filter by specific date (YYYY-MM-DD format)
+* `completed`: `true` or `false`
+* `tag`: filter by tag
+* `priority`: `low`, `medium`, `high`
+* `dueDate`: specific date in `YYYY-MM-DD` format
+
+---
 
 ## 🔐 Authentication
 
-All task routes require a valid JWT token in the Authorization header:
+All task routes require a JWT token in the `Authorization` header:
 
 ```
-Authorization: Bearer <your-jwt-token>
+Authorization: Bearer <your-token>
 ```
+
+---
 
 ## 📊 Data Models
 
-### User Schema
-```javascript
+### User
+
+```js
 {
-  email: String (required, unique),
-  password: String (required, min 6 chars),
-  name: String (required, max 50 chars),
+  email: String,        // required, unique
+  password: String,     // hashed, min 6 chars
+  name: String,         // required
   createdAt: Date,
   updatedAt: Date
 }
 ```
 
-### Task Schema
-```javascript
+### Task
+
+```js
 {
-  title: String (required, max 100 chars),
-  description: String (max 500 chars),
-  dueDate: Date (optional),
-  isCompleted: Boolean (default: false),
-  tags: [String] (max 20 chars each),
-  priority: String (low/medium/high, default: medium),
-  userId: ObjectId (ref to User),
+  title: String,        // required, max 100
+  description: String,  // optional, max 500
+  dueDate: Date,
+  isCompleted: Boolean, // default: false
+  tags: [String],       // max length per tag: 20
+  priority: String,     // low | medium | high
+  userId: ObjectId,     // reference to User
   createdAt: Date,
   updatedAt: Date
 }
 ```
+
+---
 
 ## 🧪 Testing
 
-Test the API endpoints using tools like Postman, Insomnia, or curl:
+You can test endpoints using Postman, Insomnia, or curl:
 
 ```bash
-# Health check
-curl http://localhost:5000/api/health
+# Health check (if implemented)
+curl http://localhost:5000/
 
-# User signup
+# Signup
 curl -X POST http://localhost:5000/api/auth/signup \
   -H "Content-Type: application/json" \
-  -d '{"name":"John Doe","email":"john@example.com","password":"123456"}'
+  -d '{"name":"Jane Doe","email":"jane@example.com","password":"123456"}'
 
-# User login
+# Login
 curl -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"john@example.com","password":"123456"}'
+  -d '{"email":"jane@example.com","password":"123456"}'
 ```
 
-## 🚀 Deployment
+---
+
+## 🐳 Docker (Optional)
+
+### Dockerfile (included)
+
+Build and run the container:
+
+```bash
+# Build the image
+docker build -t taskmaster-backend .
+
+# Run the container
+docker run -p 5000:5000 --env-file .env.production taskmaster-backend
+```
+
+---
+
+## 🔧 Development Tools
+
+### Scripts
+
+* `npm run dev` — Start with nodemon
+* `npm start` — Start in production
+* `npm test` — Placeholder for tests
+
+### Code Guidelines
+
+* Use async/await
+* Avoid callback hell
+* Follow REST principles
+* Handle all errors with middleware
+
+---
+
+## 🌐 Deployment
 
 ### Environment Variables for Production
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/taskmaster
-JWT_SECRET=your-super-secure-production-jwt-secret
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/taskmaster
+JWT_SECRET=your-production-secret
 NODE_ENV=production
 ```
 
-### Deployment Platforms
+### Hosting Recommendations
 
-- **Backend**: Render, Railway, Heroku, or DigitalOcean
-- **Database**: MongoDB Atlas (recommended for production)
-
-## 🔧 Development
-
-### Available Scripts
-
-- `npm run dev`: Start development server with nodemon
-- `npm start`: Start production server
-- `npm test`: Run tests (to be implemented)
-
-### Code Style
-
-- Use ES6+ features
-- Follow Express.js best practices
-- Implement proper error handling
-- Use async/await for database operations
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## 📝 License
-
-This project is licensed under the ISC License.
-
-## 🆘 Support
-
-For support and questions, please open an issue in the repository.
+* **Backend**: Render, Railway, Heroku, DigitalOcean
+* **Database**: MongoDB Atlas

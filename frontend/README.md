@@ -1,263 +1,220 @@
 # TaskMaster Frontend
 
-A modern, responsive React TypeScript frontend for the MERN stack To-Do List application, built with Vite.
+A modern, responsive React TypeScript frontend for the TaskMaster MERN stack application, built with Vite.
 
 ## 🚀 Features
 
-- **Modern UI/UX**: Clean, minimal design with Tailwind CSS
-- **Responsive Design**: Mobile-first approach with responsive breakpoints
-- **Type Safety**: Full TypeScript implementation
-- **State Management**: Context API for global state management
-- **Real-time Updates**: Live task updates and filtering
-- **Accessibility**: ARIA labels and keyboard navigation support
+- **Modern UI/UX**: Sleek, minimal design powered by Tailwind CSS
+- **Responsive Design**: Optimized for mobile, tablet, and desktop
+- **Type Safety**: Full TypeScript support
+- **Token-based Auth**: JWT handled without localStorage user data
+- **Live Task Syncing**: Immediate UI updates on task changes
+- **Filter System**: Dropdown filters by status, priority, due date
+- **Date/Time Picker**: Separated and formatted inputs
+- **Task Grouping**: Tasks grouped by date (Today, Tomorrow, Overdue)
+- **Context API**: Auth and Task global state management
+- **Accessibility**: ARIA attributes and keyboard support
+
+---
 
 ## 🛠️ Tech Stack
 
+- **Framework**: React 18 + TypeScript
 - **Build Tool**: Vite
-- **Framework**: React 18 with TypeScript
 - **Styling**: Tailwind CSS
 - **Routing**: React Router v6
 - **HTTP Client**: Axios
 - **State Management**: React Context API
 - **Date Handling**: date-fns
-- **Icons**: Heroicons (via SVG)
+- **Icons**: Heroicons (SVG)
+
+---
 
 ## 📁 Project Structure
 
 ```
 
 frontend/src/
-├── components/           # Reusable UI components
+├── components/
+│   ├── FilterSidebar.tsx       # Filters (dropdowns, stats)
 │   ├── LoadingSpinner.tsx
 │   ├── NavigationBar.tsx
-│   ├── FilterSidebar.tsx
-│   ├── TaskList.tsx
 │   ├── TaskCard.tsx
-│   └── TaskForm.tsx
-├── contexts/            # React Context providers
-│   ├── AuthContext.tsx
+│   ├── TaskForm.tsx            # With date & time picker
+│   └── TaskList.tsx
+├── contexts/
+│   ├── AuthContext.tsx         # Token-based login state
 │   └── TaskContext.tsx
-├── pages/               # Page components
+├── pages/
+│   ├── Dashboard.tsx
 │   ├── LoginPage.tsx
-│   ├── SignupPage.tsx
-│   └── Dashboard.tsx
-├── services/            # API service layer
-│   └── api.ts
-├── types/               # TypeScript type definitions
-│   └── index.ts
-├── App.tsx              # Main app component
-└── main.tsx             # Vite app entry point
+│   └── SignupPage.tsx
+├── services/
+│   └── api.ts                  # Axios instance with auth header
+├── types/
+│   └── index.ts                # TypeScript types/interfaces
+├── App.tsx
+└── main.tsx
 
 ````
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm or yarn
-- Backend API running (see backend README)
+- Node.js (v16+)
+- Backend API (see TaskMaster backend)
 
 ### Installation
 
-1. **Navigate to frontend directory**
-   ```bash
-   cd frontend
+```bash
+cd frontend
+npm install
 ````
 
-2. **Install dependencies**
+### .env Setup
 
-   ```bash
-   npm install
-   ```
+```env
+VITE_APP_API_URL=http://localhost:5000/api
+```
 
-3. **Environment Setup**
-   Create a `.env` file in the frontend directory:
+### Start Dev Server
 
-   ```env
-   VITE_API_URL=http://localhost:5000/api
-   ```
+```bash
+npm run dev
+```
 
-4. **Start development server**
+Access: [http://localhost:5173](http://localhost:5173)
 
-   ```bash
-   npm run dev
-   ```
-
-   The app will open at `http://localhost:5173`
-
-## 🎨 UI Components
-
-### Authentication Pages
-
-* **LoginPage**: User authentication with email/password
-* **SignupPage**: User registration with validation
-
-### Dashboard
-
-* **NavigationBar**: Top navigation with user info and logout
-* **FilterSidebar**: Task filtering and statistics
-* **TaskList**: Organized task display grouped by date
-* **TaskCard**: Individual task display with inline editing
-* **TaskForm**: Modal for creating/editing tasks
-
-### Common Components
-
-* **LoadingSpinner**: Loading states throughout the app
+---
 
 ## 🔐 Authentication Flow
 
-1. **Login/Signup**: Users authenticate via email/password
-2. **JWT Storage**: Tokens stored in localStorage
-3. **Protected Routes**: Dashboard access requires valid token
-4. **Auto-logout**: Expired tokens trigger automatic logout
+* **Login/Signup**: Uses email and password
+* **JWT Handling**: Token stored only in memory (`AuthContext`)
+* **Authorization**: Sent in `Authorization: Bearer <token>` headers
+* **Session Persistence**: Token restored on refresh (if available)
+* **No localStorage user data**
 
-## 📱 Responsive Design
+---
 
-* **Mobile First**: Optimized for mobile devices
-* **Breakpoints**: Responsive design for tablet and desktop
-* **Touch Friendly**: Optimized touch targets and gestures
-* **Collapsible Sidebar**: Mobile-friendly navigation
+## 🎯 Task Management
 
-## 🎯 Task Management Features
-
-### Task Creation
+### Create Task
 
 * Title (required)
 * Description (optional)
-* Due date and time
-* Priority levels (low/medium/high)
-* Custom tags
+* Due Date (DD-MM-YYYY) & Time (HH\:MM)
+* Priority (low, medium, high)
+* Tags (add/remove dynamically)
 
-### Task Organization
+### Actions
 
-* Grouped by due date (Today, Tomorrow, Overdue, etc.)
-* Priority-based color coding
-* Tag-based categorization
-* Completion status tracking
+* Add / Edit / Delete tasks
+* Mark as complete/incomplete
+* View grouped by date (Today, Tomorrow, Overdue)
+* Real-time UI updates
+* Tag management with autocomplete
 
-### Task Actions
+---
 
-* Mark complete/incomplete
-* Edit task details
-* Delete tasks
-* Filter and search
+## 🧭 Filtering & Sidebar
 
-## 🎨 Design System
+* **Dropdowns**:
 
-### Color Palette
+  * Status: All, Completed, Pending
+  * Priority: All, High, Medium, Low
+  * Due Date: All, Today, Tomorrow
+* **Task Statistics**:
 
-* **Primary**: Blue shades for main actions
-* **Success**: Green for completed tasks
-* **Warning**: Yellow for pending tasks
-* **Danger**: Red for overdue tasks and errors
+  * Total, Pending, Completed, Overdue
+* **Clear Filters** button
 
-### Typography
+---
 
-* **Font**: Inter (Google Fonts)
-* **Weights**: 300, 400, 500, 600, 700
-* **Hierarchy**: Clear heading and body text structure
+## 🎨 UI/UX
 
-### Spacing
+### Design System
 
-* **Consistent**: 4px base unit system
-* **Responsive**: Adaptive spacing for different screen sizes
+* **Color Coding**:
 
-## 🔧 Development
+  * Blue: Neutral/primary
+  * Green: Completed
+  * Yellow: Pending
+  * Red: Overdue/Error
+* **Typography**: Inter font (300–700)
+* **Spacing**: Tailwind’s 4px grid system
+* **Accessibility**: ARIA support + keyboard friendly
 
-### Available Scripts
+---
 
-* `npm run dev`: Start development server
-* `npm run build`: Build for production
-* `npm run preview`: Preview the production build
-* `npm run lint`: Run linting
+## ⚙️ Development Scripts
 
-### Code Style
+```bash
+npm run dev       # Start development server
+npm run build     # Production build
+npm run preview   # Preview production
+npm run lint      # Run ESLint
+```
 
-* **TypeScript**: Strict type checking enabled
-* **ESLint**: Code quality and consistency
-* **Prettier**: Code formatting
-* **Functional Components**: Modern React patterns with hooks
+---
 
-### State Management
+## 🔧 Developer Notes
 
-* **Context API**: Global state for auth and tasks
-* **Local State**: Component-level state management
-* **Async Operations**: Proper error handling and loading states
+* Functional components & hooks only
+* Strict TypeScript enforcement
+* React Context manages:
 
-## 🧪 Testing
+  * Auth token & session
+  * Task data + filters
+* Axios auto-includes token in headers
+* Task list updates on create/complete/delete automatically
 
-### Testing Strategy
+---
 
-* **Unit Tests**: Component testing with React Testing Library
-* **Integration Tests**: API integration testing
-* **E2E Tests**: User workflow testing (to be implemented)
+## 🧪 Testing (Setup Required)
 
-### Running Tests
+> (Add Jest or Vitest as needed)
 
 ```bash
 npm test
 ```
 
-> Add a testing framework like Vitest or Jest for test support.
+Test Types (Planned):
 
-## 🚀 Deployment
+* Unit tests (components)
+* Integration tests (API + UI)
+* E2E (Cypress or Playwright)
 
-### Build for Production
+---
+
+## 🌐 Deployment
 
 ```bash
 npm run build
 ```
 
-### Deployment Platforms
+Deploy to:
 
-* **Vercel**: Recommended for React apps
-* **Netlify**: Alternative deployment option
-* **AWS S3**: Static hosting with CloudFront
+* **Vercel**
+* **Netlify**
+* **AWS S3 + CloudFront**
+* **Static servers (e.g., Nginx)**
 
-### Environment Variables
+### Production Env Example
 
 ```env
-VITE_API_URL=https://your-api-domain.com/api
+VITE_APP_API_URL=https://api.taskmaster.com/api
 ```
 
-## 🔒 Security Features
+---
 
-* **JWT Authentication**: Secure token-based auth
-* **Input Validation**: Client-side form validation
-* **XSS Protection**: React's built-in XSS protection
-* **HTTPS Only**: Secure communication in production
+## 🚧 Planned Improvements
 
-## 📱 PWA Features (Future)
+* PWA support: Offline tasks, push reminders
+* Task reminders/notifications
+* Search & filter by tag
+* Light/Dark mode toggle
 
-* **Service Worker**: Offline functionality
-* **App Manifest**: Installable app experience
-* **Push Notifications**: Task reminders
-* **Background Sync**: Offline task creation
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support and questions:
-
-* Check the documentation
-* Open an issue in the repository
-* Review the backend API documentation
-
-## 🔄 Updates and Maintenance
-
-* **Regular Updates**: Keep dependencies up to date
-* **Security Patches**: Monitor for security vulnerabilities
-* **Performance**: Regular performance audits
-* **Accessibility**: Continuous accessibility improvements

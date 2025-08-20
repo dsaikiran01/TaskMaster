@@ -107,7 +107,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [isOpen]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { target: { name: string; value: string }}) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { target: { name: string; value: string } }) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,

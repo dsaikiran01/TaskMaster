@@ -39,8 +39,8 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar 
-        user={user} 
+      <NavigationBar
+        user={user}
         onLogout={logout}
         onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
       />
@@ -179,7 +179,7 @@ const Dashboard: React.FC = () => {
             )}
 
             {/* Task List */}
-            <TaskList 
+            <TaskList
               tasks={tasks}
               isLoading={isLoading}
               onTaskUpdate={async (id, data) => {

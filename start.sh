@@ -55,7 +55,7 @@ sleep 3
 # Start frontend in background
 echo "🎨 Starting frontend server..."
 cd ../frontend
-npm start &
+npm run dev &
 FRONTEND_PID=$!
 
 echo ""

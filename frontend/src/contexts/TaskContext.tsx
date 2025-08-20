@@ -39,7 +39,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [isFetching, setIsFetching] = useState(false);    // for fetching list
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<FilterOptions>({});
-  
+
   const { isAuthenticated } = useAuth();
 
   const fetchTasks = async () => {
@@ -81,7 +81,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
       setIsLoading(true);
       setError(null);
       const response = await apiService.updateTask(id, data);
-      setTasks(prev => prev.map(task => 
+      setTasks(prev => prev.map(task =>
         task._id === id ? response.task : task
       ));
     } catch (error: any) {
@@ -111,7 +111,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
       setIsLoading(true);
       setError(null);
       const response = await apiService.toggleTask(id);
-      setTasks(prev => prev.map(task => 
+      setTasks(prev => prev.map(task =>
         task._id === id ? response.task : task
       ));
     } catch (error: any) {

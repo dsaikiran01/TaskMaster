@@ -135,20 +135,18 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onUpdate, onDelete, onToggle 
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-md border border-gray-200 p-4 transition-all duration-200 hover:shadow-lg ${
-        task.isCompleted ? 'opacity-75' : ''
-      }`}
+      className={`bg-white rounded-lg shadow-md border border-gray-200 p-4 transition-all duration-200 hover:shadow-lg ${task.isCompleted ? 'opacity-75' : ''
+        }`}
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-2">
           <button
             onClick={onToggle}
-            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors duration-200 ${
-              task.isCompleted
+            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors duration-200 ${task.isCompleted
                 ? 'bg-green-500 border-green-500 text-white'
                 : 'border-gray-300 hover:border-blue-500'
-            }`}
+              }`}
           >
             {task.isCompleted && (
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">

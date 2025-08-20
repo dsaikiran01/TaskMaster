@@ -76,9 +76,9 @@ class ApiService {
 
   // get user details
   async getCurrentUser(): Promise<User> {
-  const response = await this.api.get<User>('/auth/me'); // or '/users/me' based on your backend
-  return response.data;
-}
+    const response = await this.api.get<User>('/auth/me'); // or '/users/me' based on your backend
+    return response.data;
+  }
 
   // Task methods
   async getTasks(filters?: FilterOptions): Promise<TaskResponse> {
