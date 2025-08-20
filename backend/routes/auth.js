@@ -110,23 +110,19 @@ router.post('/login', [
 });
 
 // @route   GET /api/auth/me
-// @desc    Get current user info using token
+// @desc    Get current logged-in user info using token
 // @access  Private
 router.get('/me', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select('-password');
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
+    const user = req.user; // Comes from middleware
     res.json({
       id: user._id,
       name: user.name,
       email: user.email
     });
   } catch (error) {
-    console.error('Get current user error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error in /me route:', error);
+    res.status(500).json({ message: 'Server error while fetching user' });
   }
 });
 

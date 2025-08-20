@@ -27,15 +27,6 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-const safeParse = <T,>(json: string | null): T | null => {
-  if (!json) return null;
-  try {
-    return JSON.parse(json) as T;
-  } catch {
-    return null;
-  }
-};
-
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -48,6 +39,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return;
   }
 
+  console.log('Restoring session with token:', storedToken);
+
   setToken(storedToken);
   apiService.setToken(storedToken);
 
@@ -56,8 +49,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     .then((user) => {
       setUser(user);
     })
-    .catch(() => {
+    .catch((error) => {
       // Token is invalid or expired
+      console.error('Failed to restore user session:', error);
       setToken(null);
       localStorage.removeItem('token');
     })
@@ -78,7 +72,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(response.user);
       setToken(response.token);
       localStorage.setItem('token', response.token);
-      // localStorage.setItem('user', JSON.stringify(response.user));
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -94,7 +87,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(response.user);
       setToken(response.token);
       localStorage.setItem('token', response.token);
-      // localStorage.setItem('user', JSON.stringify(response.user));
     } catch (error) {
       console.error('Signup error:', error);
       throw error;
@@ -107,7 +99,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
-    // localStorage.removeItem('user');
   };
 
   const value = useMemo(() => ({
