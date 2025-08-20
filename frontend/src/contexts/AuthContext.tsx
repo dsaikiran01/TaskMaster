@@ -41,19 +41,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = safeParse<User>(localStorage.getItem('user'));
-
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(storedUser);
-    } else {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-    }
+ useEffect(() => {
+  const storedToken = localStorage.getItem('token');
+  if (!storedToken) {
     setIsLoading(false);
-  }, []);
+    return;
+  }
+
+  setToken(storedToken);
+  apiService.setToken(storedToken);
+
+  // Fetch user from backend using the token
+  apiService.getCurrentUser()
+    .then((user) => {
+      setUser(user);
+    })
+    .catch(() => {
+      // Token is invalid or expired
+      setToken(null);
+      localStorage.removeItem('token');
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+}, []);
+
 
   useEffect(() => {
     apiService.setToken(token || null);
@@ -66,7 +78,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(response.user);
       setToken(response.token);
       localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      // localStorage.setItem('user', JSON.stringify(response.user));
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -82,7 +94,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(response.user);
       setToken(response.token);
       localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      // localStorage.setItem('user', JSON.stringify(response.user));
     } catch (error) {
       console.error('Signup error:', error);
       throw error;
@@ -95,7 +107,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    // localStorage.removeItem('user');
   };
 
   const value = useMemo(() => ({

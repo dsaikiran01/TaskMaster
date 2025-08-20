@@ -8,7 +8,8 @@ import type {
   UpdateTaskData,
   LoginData,
   SignupData,
-  FilterOptions
+  FilterOptions,
+  User
 } from '../types/index.ts';
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000/api';
@@ -44,7 +45,7 @@ class ApiService {
       (error: AxiosError) => {
         if (error.response?.status === 401) {
           localStorage.removeItem('token');
-          localStorage.removeItem('user');
+          // localStorage.removeItem('user');
           // Redirect to login page or home
           window.location.href = '/';
         }
@@ -72,6 +73,12 @@ class ApiService {
     const response = await this.api.post<AuthResponse>('/auth/login', data);
     return response.data;
   }
+
+  // get user details
+  async getCurrentUser(): Promise<User> {
+  const response = await this.api.get<User>('/auth/me'); // or '/users/me' based on your backend
+  return response.data;
+}
 
   // Task methods
   async getTasks(filters?: FilterOptions): Promise<TaskResponse> {
