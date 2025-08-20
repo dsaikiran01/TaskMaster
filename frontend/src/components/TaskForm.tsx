@@ -107,7 +107,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [isOpen]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { target: { name: string; value: string }}) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -122,10 +122,10 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
     const handleAddTag = () => {
         const tag = tagInput.trim();
-        if (tag && !formData.tags.includes(tag)) {
+        if (tag && !(formData.tags ?? []).includes(tag)) {
             setFormData(prev => ({
                 ...prev,
-                tags: [...prev.tags, tag]
+                tags: [...(prev.tags ?? []), tag]
             }));
             setTagInput('');
         }
@@ -134,7 +134,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     const handleRemoveTag = (tagToRemove: string) => {
         setFormData(prev => ({
             ...prev,
-            tags: prev.tags.filter(tag => tag !== tagToRemove)
+            tags: (prev.tags ?? []).filter(tag => tag !== tagToRemove)
         }));
     };
 
@@ -164,10 +164,10 @@ const TaskForm: React.FC<TaskFormProps> = ({
         // Submit form
         const submitData: CreateTaskData = {
             title: formData.title.trim(),
-            description: formData.description.trim() || undefined,
+            description: formData.description || ''.trim() || undefined,
             dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString() : undefined,
             priority: formData.priority,
-            tags: formData.tags
+            tags: (formData.tags || [])
         };
 
         onSubmit(submitData);
@@ -367,9 +367,9 @@ const TaskForm: React.FC<TaskFormProps> = ({
                         </div>
 
                         {/* Display tags */}
-                        {formData.tags.length > 0 && (
+                        {(formData.tags || []).length > 0 && (
                             <div className="flex flex-wrap gap-2" aria-live="polite" aria-relevant="additions removals">
-                                {formData.tags.map((tag, index) => (
+                                {(formData.tags || []).map((tag, index) => (
                                     <span
                                         key={index}
                                         className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
